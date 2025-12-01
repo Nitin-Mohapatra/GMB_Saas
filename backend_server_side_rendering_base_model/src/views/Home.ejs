@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>GMB Analyzer</title>
+</head>
+<body>
+    <h1>Enter GMB Link</h1>
+    <% if (error) { %>
+        <ul style="color: red;">
+            <% errors.forEach(err => { %>
+                <li><%= err.msg %></li>
+            <% }) %>
+        </ul>
+    <% } %>
+    
+    <form action="/analyze" method="POST">
+        <input type="text" name="gmbUrl" placeholder="Paste your GMB URL" required>
+        <button type="submit">Analyze</button>
+    </form>
+</body>
+</html>
