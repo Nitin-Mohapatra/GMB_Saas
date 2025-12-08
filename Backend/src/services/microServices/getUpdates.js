@@ -22,11 +22,10 @@ exports.scrapUpdate = async (page) => {
         totalUpdates = await page.evaluate(() => {
             return document.querySelectorAll(".Tc0rEd.cKbrCd").length;
         });
-        // document.querySelector(".hYBOP.FeXq4d").click();
 
     } catch (e) {
         totalUpdates = 0;
     }
-    
+
     return totalUpdates;
 }

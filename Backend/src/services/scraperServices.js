@@ -1,7 +1,8 @@
 const { initalizePuppeteer } = require("./microServices/inistializePuppeteer");
 const { scrapDescriptionProduct } = require("./microServices/descriptionProductScraper");
-const {mainDetails} = require("./microServices/scrapMainDetails");
-const {scrapUpdate} = require("./microServices/getUpdates");
+const { mainDetails } = require("./microServices/scrapMainDetails");
+const { scrapUpdate } = require("./microServices/getUpdates");
+const {getRepliesCount} = require("./microServices/replyCount");
 
 const scrapeGMB = async (gmbUrl) => {
     let browser
@@ -23,13 +24,13 @@ const scrapeGMB = async (gmbUrl) => {
         // SCRAPE UPDATES
         const totalUpdates = await scrapUpdate(page);
 
-        // SCRAPE REVIEWS
-       
-
+        // SCRAPE TOTAL REPLIES
+        let repliesCount = await getRepliesCount(page);
+        
         //SCRAPE  DESCRIPTION & PRODUCTS FROM (SERP)            
-        const des_ser = await scrapDescriptionProduct(page, mainData.bisName , mainData.category, mainData.address);
+        const des_ser = await scrapDescriptionProduct(page, mainData.bisName, mainData.category, mainData.address);
 
-        return { ...mainData, ...des_ser, totalUpdates };
+        return { ...mainData, ...des_ser, totalUpdates , repliesCount};
 
     } catch (err) {
         console.error("SCRAPING ERROR:", err);
