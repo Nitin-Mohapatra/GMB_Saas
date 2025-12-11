@@ -28,7 +28,7 @@ const tiers = [
   {
     title: 'Professional',
     subheader: 'Recommended',
-    price: '15',
+    price: '0',
     description: [
       '20 users included',
       '10 GB of storage',
@@ -43,7 +43,7 @@ const tiers = [
   },
   {
     title: 'Enterprise',
-    price: '30',
+    price: '0',
     description: [
       '50 users included',
       '30 GB of storage',

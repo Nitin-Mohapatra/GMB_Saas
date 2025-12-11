@@ -11,12 +11,13 @@ import GitHubIcon from '@mui/icons-material/GitHub';
 import LinkedInIcon from '@mui/icons-material/LinkedIn';
 import TwitterIcon from '@mui/icons-material/X';
 import SitemarkIcon from './SitemarkIcon.jsx';
+// import { Link } from 'react-scroll';
 
 function Copyright() {
   return (
     <Typography variant="body2" sx={{ color: 'text.secondary', mt: 1 }}>
       {'Copyright © '}
-      <Link color="text.secondary" href="https://mui.com/">
+      <Link color="text.secondary" to="http://localhost:5173/Home">
         Sitemark
       </Link>
       &nbsp;

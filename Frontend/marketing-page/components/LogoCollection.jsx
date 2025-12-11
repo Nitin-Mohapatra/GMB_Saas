@@ -45,6 +45,9 @@ export default function LogoCollection() {
     logos = darkModeLogos;
   }
 
+  const effectiveMode = mode==='system'?systemMode:mode;
+  const gradientColour = effectiveMode === 'dark'?[24,28,32]:[255,255,255];
+
   return (
     <Box id="logoCollection" sx={{ py: 4 }}>
       <Typography
@@ -55,15 +58,13 @@ export default function LogoCollection() {
       >
         Trusted by the best companies
       </Typography>
-      <Grid container sx={{ justifyContent: 'center', mt: 0.5, opacity: 0.6 }}>
+      <Grid container sx={{ justifyContent: 'center', mt: 0.5, opacity: 0.6 ,paddingLeft:"2rem",paddingRight:"2rem"}}>
         <Marquee
           autoFill
           gradient
           gradientWidth={100}
-          gradientColor={[30, 30, 30]}
-          gradientStyle={{
-            filter: 'blur(12px)'
-          }}
+          gradientColor={gradientColour}
+
         >
           {logos.map((logo, index) => (
             <Grid key={index}>

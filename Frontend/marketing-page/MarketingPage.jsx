@@ -31,11 +31,11 @@ export default function MarketingPage(props) {
 
         <Divider />
 
-        <div id="highlights"><Highlights /></div>
+        {/* <div id="highlights"><Highlights /></div> */}
 
         <Divider />
 
-        <div id="pricing"><Pricing /><Pricing /></div>
+        <div id="pricing"><Pricing /></div>
 
         <Divider />
         <Divider />

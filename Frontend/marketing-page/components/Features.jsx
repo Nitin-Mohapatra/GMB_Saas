@@ -15,33 +15,33 @@ import ViewQuiltRoundedIcon from '@mui/icons-material/ViewQuiltRounded';
 const items = [
   {
     icon: <ViewQuiltRoundedIcon />,
-    title: 'Dashboard',
+    title: 'Analyze any GMB',
     description:
-      'This item could provide a snapshot of the most important metrics or data points related to the product.',
+      'Quickly audit Google My Business profiles.',
     imageLight:
-      'url("https://dummyimage.com/800x600/dash-light.png")',
+      'url("https://dummyimage.com/800x600/8ecae6/fff&text=Analyze+any+GMB")',
     imageDark:
-      'url("https://dummyimage.com/800x600/dash-dark.png")',
+      'url("https://dummyimage.com/800x600/22223b/ffffff&text=Analyze+any+GMB")',
   },
   {
     icon: <EdgesensorHighRoundedIcon />,
-    title: 'Mobile integration',
+    title: 'Scrape GMB data',
     description:
-      'This item could provide information about the mobile app version of the product.',
+      'Extract essential GMB information fast.',
     imageLight:
-      'url("https://dummyimage.com/800x600/mobile-light.png")',
+      'url("https://dummyimage.com/800x600/ffbe0b/212529&text=Scrape+GMB+data")',
     imageDark:
-      'url("https://dummyimage.com/800x600/mobile-dark.png")',
+      'url("https://dummyimage.com/800x600/343a40/ffe066&text=Scrape+GMB+data")',
   },
   {
     icon: <DevicesRoundedIcon />,
     title: 'Available on all platforms',
     description:
-      'This item could let users know the product is available on all platforms, such as web, mobile, and desktop.',
+      'Use it on web, mobile, or desktop.',
     imageLight:
-      'url("https://dummyimage.com/800x600/devices-light.png")',
+      'url("https://dummyimage.com/800x600/06d6a0/22223b&text=Available+on+all+platforms")',
     imageDark:
-      'url("https://dummyimage.com/800x600/devices-dark.png")',
+      'url("https://dummyimage.com/800x600/22223b/06d6a0&text=Available+on+all+platforms")',
   },
 ];
 
@@ -151,6 +151,8 @@ export default function Features() {
 
   return (
     <Container id="features" sx={{ py: { xs: 8, sm: 16 } }}>
+
+      {/* heading and para text */}
       <Box sx={{ width: { sm: '100%', md: '60%' } }}>
         <Typography
           component="h2"
@@ -164,11 +166,11 @@ export default function Features() {
           variant="body1"
           sx={{ color: 'text.secondary', mb: { xs: 2, sm: 4 } }}
         >
-          Provide a brief overview of the key features of the product. For example,
-          you could list the number of features, their types or benefits, and
-          add-ons.
+          Here are some of the powerful features our product offers. Explore core capabilities, flexible add-ons, and diverse integrations designed to boost your workflow and maximize your team's productivity.
         </Typography>
       </Box>
+
+
       <Box
         sx={{
           display: 'flex',
@@ -227,8 +229,10 @@ export default function Features() {
                   <Typography variant="body2">{description}</Typography>
                 </Box>
               </Box>
+
             ))}
           </Box>
+          
           <MobileLayout
             selectedItemIndex={selectedItemIndex}
             handleItemClick={handleItemClick}
