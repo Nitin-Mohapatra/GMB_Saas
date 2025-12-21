@@ -34,7 +34,7 @@ const scrapeGMB = async (gmbUrl) => {
 
     } catch (err) {
         console.error("SCRAPING ERROR:", err);
-        return { error: "Failed to scrape data" };
+        throw err; // Throw the error so it can be caught by the caller's catch block
     } finally {
         if (browser) await browser.close();
     }

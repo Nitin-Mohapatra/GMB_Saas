@@ -14,6 +14,7 @@ import CloseRoundedIcon from '@mui/icons-material/CloseRounded';
 import ColorModeIconDropdown from '../shared-theme/ColorModeIconDropdown.jsx';
 import Sitemark from './SitemarkIcon.jsx';
 import { Link } from "react-scroll";
+import { Link as RouterLink, useLocation, useNavigate } from "react-router-dom";
 
 const StyledToolbar = styled(Toolbar)(({ theme }) => ({
   display: 'flex',
@@ -33,10 +34,55 @@ const StyledToolbar = styled(Toolbar)(({ theme }) => ({
 
 export default function AppAppBar() {
   const [open, setOpen] = React.useState(false);
-
+  const location = useLocation();
+  const navigate = useNavigate();
+  const isHomePage = location.pathname === '/';
+  
   const toggleDrawer = (newOpen) => () => {
     setOpen(newOpen);
   };
+
+  // dynamically handle the appbar links
+  const handleSectionClick = (sesionId)=>{
+    if(isHomePage){
+      // then use the react scroll
+      return ;
+    }else{
+      navigate('/')  //naviagte to home page
+      // then clcik on that
+      setTimeout(()=>{
+        const ele = document.getElementById(sesionId);
+        if(ele){
+          ele.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+      },1000)
+    }
+  }
+
+  // render navlicks dynamically
+  const SecLink = ({to,children,...stys})=>{
+    console.log(stys);
+    if(isHomePage){
+      return (
+        <Link to={to} {...stys} smooth={true} duration={500}>
+          {children}
+        </Link>
+      )
+    }else{
+      return (
+        <RouterLink to={`/${to}`}
+        onClick={(e)=>{
+            e.preventDefault();
+            handleSectionClick(to);
+        }}
+        {...stys}
+        >
+          {children}
+        </RouterLink>
+      )
+    }
+  }
+
 
   return (
     <AppBar
@@ -62,26 +108,23 @@ export default function AppAppBar() {
             <Box sx={{ display: { xs: 'none', md: 'flex' } }}>
              
               <Button variant="text" color="info" size="small">
-                <Link 
-                  to="features" 
-                  smooth={true} 
-                  duration={500}
-                  style={{ color: 'inherit', textDecoration: 'none' }}
-                >
-                  Features
-                </Link>
+                <SecLink to="features" style={{ color: 'inherit', textDecoration: 'none' }} >Features</SecLink>
               </Button>
 
               <Button variant="text" color="info" size="small">
-                <Link to="testimonials" smooth={true} duration={500} style={{color:'inherit'}}>Testimonials</Link>
+                <SecLink to="testimonials" style={{ color: 'inherit', textDecoration: 'none' }} >Testimonials</SecLink>
               </Button>
 
               <Button variant="text" color="info" size="small">
-                <Link to="highlights" smooth={true} duration={500} style={{color:'inherit'}}>Highlights</Link>
+                <SecLink to="highlights" style={{ color: 'inherit', textDecoration: 'none' }} >Highlights</SecLink>
               </Button>
 
               <Button variant="text" color="info" size="small">
-                <Link to="pricing" smooth={true} duration={500} style={{color:'inherit'}}>Pricing</Link>
+                <SecLink to="pricing" style={{ color: 'inherit', textDecoration: 'none' }} >Pricing</SecLink>
+              </Button>
+
+              <Button variant="text" color="info" size="small">
+                <RouterLink to="/audits" style={{color:'inherit', textDecoration: 'none'}}>My Audits</RouterLink>
               </Button>
 
 
@@ -150,6 +193,11 @@ export default function AppAppBar() {
                   <Link to="pricing" smooth={true} duration={500} offset={-64} style={{ color: "inherit", display: "block", width: "100%" }}>
                     Pricing
                   </Link>
+                </MenuItem>
+                <MenuItem>
+                  <RouterLink to="/audits" style={{ color: "inherit", display: "block", width: "100%", textDecoration: "none" }}>
+                    My Audits
+                  </RouterLink>
                 </MenuItem>
 
                 <Divider sx={{ my: 3 }} />

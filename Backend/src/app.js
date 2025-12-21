@@ -3,7 +3,16 @@ const app = express();
 const path = require('path');
 const port = 8080;
 const gmbRoutes = require('./routes/gmbRoutes');
-const { json } = require('stream/consumers');
+// const { json } = require('stream/consumers');
+const cors = require('cors');
+
+app.use(cors({
+    origin: 'http://localhost:5173', // Allow requests from this origin
+    methods: ['GET', 'POST', 'PUT', 'DELETE'], // Allowed HTTP methods
+}));
+
+app.use(express.json())
+
 
 // This line serves static PDF report files from the 'public/reports' directory.
 // When a user accesses '/reports/filename.pdf', the server responds with the corresponding file.

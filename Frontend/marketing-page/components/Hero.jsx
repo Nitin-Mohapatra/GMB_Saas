@@ -9,6 +9,13 @@ import Typography from '@mui/material/Typography';
 import visuallyHidden from '@mui/utils/visuallyHidden';
 import { styled } from '@mui/material/styles';
 import TextType from '../../src/ReactBitzAnimationComponents/Components/TextType';
+import { useForm } from "react-hook-form";
+import axios from "axios";
+import Snackbar from '@mui/material/Snackbar';
+import { useState } from 'react';
+import Alert from '@mui/material/Alert';
+
+
 
 const StyledBox = styled('div')(({ theme }) => ({
   alignSelf: 'center',
@@ -39,7 +46,30 @@ const StyledBox = styled('div')(({ theme }) => ({
 
 export default function Hero() {
 
-  
+  const [open, setOpen] = useState(false);
+  const [pdfLink, setPdfLink] = useState("");
+  const { register, handleSubmit, formState: { errors, isValid, isSubmitting } } = useForm({ mode: "onChange" });
+  const [serverError,setServerError] = useState("");
+
+  const onSubmit = async (data) => {
+    console.log("FORM DATA:", data);
+    try {
+      const response = await axios.post("http://localhost:8080/analyze", data);
+
+      if (response.status === 200 && response.data.success === true) {
+        console.log(response);
+        setServerError("");
+        setOpen(true);
+        setPdfLink(response?.data.link);
+        console.log(response.data.link)
+      }
+    } catch (error) {
+      setServerError(error.response?.data?.message || "Something went wrong... 😢")
+      console.error(error);
+      setOpen(true);
+    }
+  };
+
 
   return (
     <Box
@@ -55,6 +85,36 @@ export default function Hero() {
         }),
       })}
     >
+      <Snackbar
+        open={open}
+        autoHideDuration={4000}
+        onClose={() => {
+          setOpen(false);
+          setServerError("");
+        }}
+        >
+        <Alert
+          onClose={() => {
+            setOpen(false)
+            setServerError("");
+
+          }}
+          severity={ serverError? "error":"success"}
+          variant="filled"
+          sx={{ width: '100%' }}
+        >
+          {serverError ? serverError : (
+            <>
+              Audit Generated Sucessfully.{" "}
+              <Button
+                onClick={() => { window.open(`http://localhost:8080/${pdfLink}`, "_blank") }}>
+                View Now
+              </Button>
+            </>
+          )}
+        </Alert>
+      </Snackbar>
+
       <Container
         sx={{
           display: 'flex',
@@ -87,17 +147,17 @@ export default function Hero() {
                 color: '#CF1020',
 
                 ...theme.applyStyles('dark', {
-                  
+
                 }),
               })}
             >
               <TextType
-               text="GMB"
-               // 75 is the typing speed in ms per character (lower = faster). Controls how quickly "GMB" animates in the typewriter effect.
-               typingSpeed={75}
-               pauseDuration={1500}
-               showCursor={true}
-               cursorCharacter="_"
+                text="GMB"
+                // 75 is the typing speed in ms per character (lower = faster). Controls how quickly "GMB" animates in the typewriter effect.
+                typingSpeed={75}
+                pauseDuration={1500}
+                showCursor={true}
+                cursorCharacter="_"
               />
             </Typography>
           </Typography>
@@ -112,42 +172,50 @@ export default function Hero() {
             Effortlessly audit any Google Business Profile with instant AI analysis. Uncover insights, identify issues, and boost your local visibility—all in one intuitive app.
           </Typography>
 
-          <Stack
-            direction={{ xs: 'column', sm: 'row' }}
-            spacing={1}
-            useFlexGap
-            sx={{ pt: 2, width: { xs: '100%', sm: '350px' } }}
-          >
-            <InputLabel htmlFor="GMB-link" sx={visuallyHidden}>
-              Email
-            </InputLabel>
-
-            <TextField
-              id="GMB-link"
-              hiddenLabel
-              size="small"
-              variant="outlined"
-              aria-label="Enter Your GMB Link"
-              placeholder="Enter Your GMB Link"
-              fullWidth
-              slotProps={{
-                htmlInput: {
-                  autoComplete: 'off',
-                  'aria-label': 'Enter Your GMB Link',
-                },
-              }}
-            />
-            <Button
-              variant="contained"
-              color="primary"
-              size="small"
-              sx={{ minWidth: 'fit-content' }}
+          <form onSubmit={handleSubmit(onSubmit)}>
+            <Stack
+              direction={{ xs: 'column', sm: 'row' }}
+              spacing={1}
+              useFlexGap
+              sx={{ pt: 2, width: { xs: '100%', sm: '350px' } }}
             >
-              Start now
-            </Button>
-          </Stack>
+              <InputLabel htmlFor="GMB-link" sx={visuallyHidden}>
+                Email
+              </InputLabel>
 
-         
+              <TextField
+                id="GMB-link"
+                hiddenLabel
+                size="small"
+                variant="outlined"
+                aria-label="Enter Your GMB Link"
+                placeholder="Enter Your GMB Link"
+                {...register("gmbUrl", { required: "GMB Link is required" })}
+                error={!!errors.gmbUrl}
+                helperText={errors.gmbUrl?.message}
+                fullWidth
+                slotProps={{
+                  htmlInput: {
+                    autoComplete: 'off',
+                    'aria-label': 'Enter Your GMB Link',
+                  },
+                }}
+              />
+
+              <Button
+                variant="contained"
+                color="primary"
+                size="small"
+                sx={{ minWidth: 'fit-content' }}
+                type='submit'
+                disabled={!isValid || isSubmitting}
+              >
+                {isSubmitting ? "Scraping..." : "Start Now"}
+              </Button>
+
+            </Stack>
+          </form>
+
         </Stack>
 
         {/* <StyledBox id="image" /> */}

@@ -1,7 +1,7 @@
-const { check, validationResult } = require('express-validator');
+const { check, body,validationResult } = require('express-validator');
 
 exports.validateGMB = [
-    check('gmbUrl')
+    body('gmbUrl')
         .notEmpty().withMessage('GMB URL is required')
         // .isURL() checks if the input is a valid URL (e.g., uses http/https, proper domain structure)
         .isURL().withMessage('Invalid URL format')

@@ -1,0 +1,44 @@
+// TODOs for Project Improvements and Implementation Steps
+
+~~1. Implement Alert with PDF Access After Generation  
+   - Approach:  
+     - Use a state variable to track when PDF generation completes.
+     - The alert should include a clickable link or button.
+     - On click, redirect or open the generated PDF (use window.open(pdfUrl) or a router navigation).~~
+
+~~2. Update App Bar to Enable Home Page Navigation  
+   - Approach:  
+     - Wrap the logo or a "Home" button in a RouterLink component pointing to "/".
+     - Ensure that clicking it navigates users to the homepage.
+     - Check AppAppBar.jsx for modification points.
+
+3. Practice with the Theme Provider  
+   - Approach:  
+     - Integrate Material-UI ThemeProvider at the top level.
+     - Try creating a custom theme (colors, typography, etc.).
+     - Switch or update theme in AppBar or other components to test.
+
+4. Refactor Scraping Logic for Production Use & Dynamic Fields Per GMB Category  
+   - Approach:  
+     - Organize the scraping logic into reusable, maintainable functions or classes.
+     - Retrieve GMB category first.
+     - Dynamically determine which fields to scrape based on the detected category (e.g., scrape menu for hotels, skip for others).
+     - Use mapping/config to manage field requirements per category.
+
+5. Decide on Method and Location for Storing Generated PDFs  
+   - Approach:  
+     - Research cloud storage options: AWS S3, Google Cloud Storage, or local server.
+     - Update backend to upload generated PDF to the selected storage.
+     - Store and return the download URL for front-end access.
+
+6. Decide Whether to Add User Authentication  
+   - Approach:  
+     - Evaluate app requirements for user logins, permissions, or personalization.
+     - If needed, decide on auth method: Auth0, Firebase Auth, custom JWT, etc.
+     - Implement minimal auth (register, login, protected routes) if chosen.
+
+7. Deploy Backend and Frontend  
+   - Approach:  
+     - Backend: Prepare Dockerfile or deployment configuration for Render, test API/live endpoints.
+     - Frontend: Configure build for Netlify, set any required environment variables, deploy and verify.
+     - Document deployment steps for future reference.
