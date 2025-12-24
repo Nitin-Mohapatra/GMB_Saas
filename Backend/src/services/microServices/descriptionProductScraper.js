@@ -16,7 +16,7 @@ const scrapDescriptionProduct = async (page, bizName,bizCategory,bizAddress) => 
                 const moreBtn = document.querySelector("a.RRYiY");
                 if (moreBtn) moreBtn.click();
             });
-        } catch { }
+        } catch(e) {return e}
 
         // All possible description selectors
         const selectors = [

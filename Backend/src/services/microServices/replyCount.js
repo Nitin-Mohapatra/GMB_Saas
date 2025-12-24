@@ -6,11 +6,31 @@ exports.getRepliesCount = async (page) => {
     }
 
     // Click on Reviews tab
-    const reviewsButton = await page.$('button[aria-label*="Reviews"]');
-    if (reviewsButton) {
-        await reviewsButton.click();
-        console.log('Clicked on Reviews tab');
-    }else{console.log("Review btn not found")};
+    try{
+        await page.waitForSelector(".RWPxGd", { timeout: 3000 });
+        await page.evaluate(async()=>{
+            let myDivs = document.querySelector(".RWPxGd");
+            if(myDivs){
+                let btnDivs = [...myDivs.children];
+                btnDivs.forEach(async (btn) => {
+                    if(btn.innerText == "Reviews"){
+                        await btn.click();
+                        console.log('Clicked on Reviews tab');
+                    }
+                });
+            }else{
+                console.log("Review btn not found")
+            }
+        })
+    }catch(e){
+        console.error(e);
+    }
+
+    // const reviewsButton = await page.$('button[aria-label*="Reviews"]');
+    // if (reviewsButton) {
+    //     await reviewsButton.click();
+    //     console.log('Clicked on Reviews tab');
+    // }else{console.log("Review btn not found")};
 
     let repliesCount = 0;
     try {

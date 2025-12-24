@@ -18,7 +18,7 @@ exports.mainDetails = async (page)=>{
 
             let address = "Address Not Found";
             const addressDiv = document.querySelector(".Io6YTe.fontBodyMedium.kR99db.fdkmkc");
-            if (addressDiv) address = addressDiv.innerText.trim();
+            if (addressDiv && !addressDiv.parentNode.classList.contains("ITvuef")) address = addressDiv.innerText.trim();
 
             let website = "Website Not Found";
             const web = document.querySelector('a[data-item-id="authority"]');
