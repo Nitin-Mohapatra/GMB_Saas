@@ -3,7 +3,6 @@ const app = express();
 const path = require('path');
 const port = 8080;
 const gmbRoutes = require('./routes/gmbRoutes');
-// const { json } = require('stream/consumers');
 const cors = require('cors');
 
 app.use(cors({
